@@ -11,12 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510062630) do
+ActiveRecord::Schema.define(:version => 20120510095659) do
+
+  create_table "days", :force => true do |t|
+    t.string   "self"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "hashtags", :force => true do |t|
     t.string   "self"
     t.integer  "subject_id"
     t.integer  "teacher_id"
+    t.integer  "day_id"
+    t.integer  "timetable_id"
     t.integer  "room_id"
     t.integer  "term_id"
     t.datetime "created_at"
@@ -43,6 +51,12 @@ ActiveRecord::Schema.define(:version => 20120510062630) do
 
   create_table "terms", :force => true do |t|
     t.string   "season"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "timetables", :force => true do |t|
+    t.integer  "self"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
