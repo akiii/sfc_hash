@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  self: MyString
+  subject_id: 1
+  teacher_id: 1
+  room_id: 1
+  term_id: 1
+
+two:
+  self: MyString
+  subject_id: 1
+  teacher_id: 1
+  room_id: 1
+  term_id: 1

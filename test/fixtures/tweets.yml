@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  hashtag_id: 1
+  text: MyString
+  from_user: MyString
+  profile_image_url: MyString
+
+two:
+  hashtag_id: 1
+  text: MyString
+  from_user: MyString
+  profile_image_url: MyString
