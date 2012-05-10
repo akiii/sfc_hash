@@ -14,7 +14,6 @@ class LoginController < ApplicationController
     if id =~ /url=(.+?)"/
       id =~ /id=(.+)&type/
 
-      @user
       if User.where(:login_name => params[:u_login]).exists? then
         users = User.where(:login_name => params[:u_login])
         @user = users[0]
@@ -22,7 +21,7 @@ class LoginController < ApplicationController
         @user = User.new
         @user.login_name = params[:u_login]
         @user.user_name = params[:u_login]
-        @user.save
+	@user.save
       end
 
       reset_session
