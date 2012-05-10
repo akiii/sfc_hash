@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510095659) do
+ActiveRecord::Schema.define(:version => 20120510101004) do
 
   create_table "days", :force => true do |t|
     t.string   "self"
@@ -66,6 +66,14 @@ ActiveRecord::Schema.define(:version => 20120510095659) do
     t.string   "text"
     t.string   "from_user"
     t.string   "profile_image_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "login_name"
+    t.string   "user_name"
+    t.string   "session_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
