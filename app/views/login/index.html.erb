@@ -1,0 +1,37 @@
+<% content_for :header do %>
+  <%= image_tag 'login/login_sfc_hash.png', :class => 'title' %>
+<% end %>
+
+<% content_for :form do %>
+  <%= form_tag({ :controller => 'login', :action => 'submit' }) do %>
+
+    <div class="error">
+      <% if flash[:error] %>
+        <br /><%= flash[:error] %><br />
+      <% end %>
+    </div>
+
+    <div class="form">
+      <%= label_tag 'ログイン名' %>
+      <%= text_field_tag 'u_login', nil, :size => "8", :style => "width: 45%", :maxlength => 255 %>
+      <br />
+      <%= label_tag 'パスワード' %>
+      <%= password_field_tag 'u_pass', nil, :size => "20", :style => "width: 45%", :maxlength => 255 %>
+      <br />
+      <div class="button">
+        <%= image_submit_tag("login/login_button.png") %>
+      </div>
+    </div>
+
+  <% end %>
+<% end %>
+
+<% content_for :description do %>
+  <p>※このサイトはSFC生がtwitterの<br />&nbsp;&nbsp;&nbsp;授業ハッシュタグを見つけやす<br />&nbsp;&nbsp;&nbsp;くするためサービスです。</p>
+<% end %>
+
+<% content_for :footer do %>
+  <div class="copyright">
+    <adress>copyright &copy; Aki All Right Reserved.</adress>
+  </div>
+<% end %>

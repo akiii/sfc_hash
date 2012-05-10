@@ -1,3 +1,84 @@
 // Place all the styles related to the login controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@charset "UTF-8";
+
+a:link{
+        color: #ffffff;
+}
+a:visited{
+        color: #0000ff;
+}
+a:hover{
+        color: #ff0000;
+}
+a:active{
+        color: #ff0000;
+}
+body{
+        color: #ffffff;
+}
+#wrapper{
+        background-image: url("login/top.png");
+        background-repeat: no-repeat;
+        width: 900px;
+        height: 600px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -300px;
+        margin-left: -450px;
+}
+#header{
+}
+.title{
+        position: relative;
+        top: 80px;
+        left: 50px;
+}
+#content{
+}
+/*
+#description{
+        background-color: #00ff00;
+        width: 380px;
+        float: left;
+        font-size: 100%;
+        padding-top: 160px;
+        padding-left: 100px;
+}
+*/
+#form{
+        background-image: url("login/login_board.png");
+        background-repeat: no-repeat;
+        width: 450px;
+        height: 300px;
+        float: right;
+        margin-top: 100px;
+        margin-right: 150px;
+}
+#form .error{
+        font-size: x-large;
+        color: #ff0000;
+        height: 120px;
+        padding-top: 5%;
+        padding-left: 5%;
+}
+#form .form{
+        color: #000000;
+        font-size: large;
+        height: 180px;
+        padding-left: 30px;
+}
+#form .button{
+        margin-top: 30px;
+        margin-left: 280px;
+}
+#footer{
+}
+#footer .copyright{
+        position: absolute;
+        bottom: 20px;
+        left: 310px;
+}
