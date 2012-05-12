@@ -35,3 +35,4 @@ group :test do
 end
 
 gem 'httpclient'
+gem 'sanitize'
