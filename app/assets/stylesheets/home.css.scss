@@ -148,39 +148,39 @@ body{
         border-top: 1px solid #000000;
         border-bottom: 1px solid #000000;
 }
-#mysubject{
+#subjects_info{
         width: 50%;
         float:right;
 }
-.mysubject{
+.subjects_info{
         color: #000000;
         width: 90%;
         border-top: 1px solid #ffffff;
         border-left: 1px solid #ffffff;
 }
-.mysubject th{
+.subjects_info th{
         border-right: 1px solid #ffffff;
         border-bottom: 1px solid #ffffff;
 }
-.mysubject td{
+.subjects_info td{
         text-align: center;
         border-right: 1px solid #ffffff;
         border-bottom: 1px solid #ffffff;
 }
-#mysubject .top{
+#subjects_info .top{
         background-image: url("home/board_top.png");
         margin-top: 20px;
         margin-left: 5%;
         width: 400px;
         height: 20px;
 }
-#mysubject .center{
+#subjects_info .center{
         background-image: url("home/board_middle.png");
         margin-left: 5%;
         width: 400px;
         height: auto;
 }
-#mysubject .bottom{
+#subjects_info .bottom{
         background-image: url("home/board_bottom.png");
         background-position: 0px -80px;
         margin-left: 5%;
