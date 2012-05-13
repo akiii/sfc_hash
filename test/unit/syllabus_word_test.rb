@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SyllabusWordsTest < ActiveSupport::TestCase
+class SyllabusWordTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -2,8 +2,8 @@
 
 one:
   string: MyString
-  subject_id: 1
+  subject_info_id: 1
 
 two:
   string: MyString
-  subject_id: 1
+  subject_info_id: 1

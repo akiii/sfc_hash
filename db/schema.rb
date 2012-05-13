@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120513141046) do
+ActiveRecord::Schema.define(:version => 20120513170800) do
 
   create_table "days", :force => true do |t|
     t.string   "self"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20120513141046) do
 
   create_table "syllabus_words", :force => true do |t|
     t.string   "string"
-    t.integer  "subject_id"
+    t.integer  "subject_info_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
