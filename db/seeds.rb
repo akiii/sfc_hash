@@ -38,19 +38,28 @@ if id =~ /url=(.+?)"/
   id =~ /id=(.+)&type/
   id = $1
 end
-@subject_detail_urls = []
-@syllabus_urls = []
-@subjects_name_arr = []
 for i in 0..17 do
   url = "https://vu8.sfc.keio.ac.jp/sfc-sfs/sfs_class/student/class_list.cgi?lang=ja&term=2012s&command=search_cat&cat="+i.to_s+"&id="+id
   url = client.get_content(url).toutf8
-  url.scan(/<li>(.)(.)(.)(,(.)(.))?：(.*?)\((.*?)<a href="(.*?)" target="_blank">(.*?) <\/a>\((.*?)\)/) do |term, day1, timetable1, str1, day2, timetable2, ks, str2, detail_url, subject, teacher|
+  url.scan(/<li>(.)(.)(.)(,(.)(.))?：(.*?)\((.*?)<a href="(.*?)" target="_blank">(.*?)(\s?)<\/a>\((.*?)\)/) do |term, day1, timetable1, str1, day2, timetable2, ks, str2, detail_url, subject, str3, teacher|
     unless Subject.new.exist(subject)
       Subject.create(name: subject)
     end
     unless Teacher.new.exist(teacher)
           Teacher.create(name: teacher)
     end
+#    puts "$1/term       : /#{$1}/#{term}/"
+#    puts "$2/day1       : /#{$2}/#{day1}/"
+#    puts "$3/timetable1 : /#{$3}/#{timetable1}/"
+#    puts "$4/str1       : /#{$4}/#{str1}/"
+#    puts "$5/day2       : /#{$5}/#{day2}/"
+#    puts "$6/timetable2 : /#{$6}/#{timetable2}/"
+#    puts "$7/ks         : /#{$7}/#{ks}/"
+#    puts "$8/str2       : /#{$8}/#{str2}/"
+#    puts "$9/detail_url : /#{$9}/#{detail_url}/"
+#    puts "$10/subject   : /#{$10}/#{subject}/"
+#    puts "$11/str3      : /#{$11}/#{str3}/"
+#    puts "$12/teacher   : /#{$12}/#{teacher}/"
     term_id = Term.find_by_season(term).id
     day_id = Day.find_by_self(day1).id
     timetable_id = Timetable.find_by_self(Timetable.new.get_timetable_number_from_string(timetable1)).id
@@ -66,36 +75,35 @@ for i in 0..17 do
         SubjectInfo.create(term_id: term_id, day_id: day_id, timetable_id: timetable_id, subject_id: subject_id, teacher_id: teacher_id)
       end
     end
-    unless @subjects_name_arr.index(subject)
-      if /yc=(.*?)&ks=(.*?)$/ =~ detail_url
-        yc = $1
-        ks = $2
-        data = {"cns" => account, "u_pass" => password, "cns_checkmode" => "1", "yc" => yc, "ks" => ks, "lang" => ""}
-        syllabus_html = client.post_content("https://vu8.sfc.keio.ac.jp/course2007/summary/syll_view.cgi", data).toutf8
-        syllabus_html.scan(/<th nowrap class="ctitle2">(.*?) - (.*?)<br>/) do |ks, subject|
-          syllabus_html = syllabus_html.gsub("\n", "")
-          syllabus_html.scan(/<th class="sub_title1">科目概要（詳細）<\/th>(.*?)<th class="sub_title1">授業シラバス<\/th>(.*?)<th class="sub_title2">主題と目標／授業の手法など<\/th>(.*?)<th class="sub_title2">教材・参考文献<\/th>/) do |syllabus1, str1, syllabus2|
-            syllabus_str = syllabus1 + syllabus2
-            syllabus_str = Sanitize.clean(syllabus_str)
-            word_arr = []
-            mecab = MeCab::Tagger.new
-            node = mecab.parseToNode(syllabus_str)
-            while node do
-              if /名詞/u =~ node.feature.force_encoding("utf-8")
-                word_arr << node.surface
-              end
-              node = node.next
-            end
-            word_arr.uniq!
-            word_arr.each do |word|
-              subject_info = SubjectInfo.find_by_term_id_and_day_id_and_timetable_id_and_subject_id_and_teacher_id(term_id, day_id, timetable_id, subject_id, teacher_id)
-              unless SyllabusWord.new.exist(word, subject_info)
-                SyllabusWord.create(string: word, subject_info_id: subject_info.id)
-              end
+    if /yc=(.*?)&ks=(.*?)$/ =~ detail_url
+      yc = $1
+      ks = $2
+      data = {"cns" => account, "u_pass" => password, "cns_checkmode" => "1", "yc" => yc, "ks" => ks, "lang" => ""}
+      syllabus_html = client.post_content("https://vu8.sfc.keio.ac.jp/course2007/summary/syll_view.cgi", data).toutf8
+      syllabus_html.scan(/<th nowrap class="ctitle2">(.*?) - (.*?)<br>/) do |ks, subject|
+        syllabus_html = syllabus_html.gsub("\n", "")
+        syllabus_html.scan(/<th class="sub_title1">科目概要（詳細）<\/th>(.*?)<th class="sub_title1">授業シラバス<\/th>(.*?)<th class="sub_title2">主題と目標／授業の手法など<\/th>(.*?)<th class="sub_title2">教材・参考文献<\/th>/) do |syllabus1, str1, syllabus2|
+          syllabus_str = syllabus1 + syllabus2
+          syllabus_str = Sanitize.clean(syllabus_str)
+          word_arr = []
+          mecab = MeCab::Tagger.new
+          node = mecab.parseToNode(syllabus_str)
+          while node do
+            if /名詞/u =~ node.feature.force_encoding("utf-8")
+              word_arr << node.surface
+           end
+            node = node.next
+          end
+          word_arr.uniq!
+          word_arr.each do |word|
+            subject_info = SubjectInfo.find_by_term_id_and_day_id_and_timetable_id_and_subject_id_and_teacher_id(term_id, day_id, timetable_id, subject_id, teacher_id)
+            unless SyllabusWord.new.exist(word, subject_info)
+              SyllabusWord.create(string: word, subject_info_id: subject_info.id)
             end
           end
         end
       end
     end
   end
+#  puts "#{100.0 / 18 * (i + 1)}% done"
 end
