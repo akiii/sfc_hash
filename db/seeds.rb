@@ -48,47 +48,51 @@ for i in 0..17 do
     unless Subject.new.exist(subject)
       Subject.create(name: subject)
     end
-    unless @subjects_name_arr.index(subject)
-      @subject_detail_urls << detail_url
-      @subjects_name_arr << subject
-    end
     unless Teacher.new.exist(teacher)
           Teacher.create(name: teacher)
     end
+    term_id = Term.find_by_season(term).id
+    day_id = Day.find_by_self(day1).id
+    timetable_id = Timetable.find_by_self(Timetable.new.get_timetable_number_from_string(timetable1)).id
+    subject_id = Subject.find_by_name(subject).id
+    teacher_id = Teacher.find_by_name(teacher).id
     unless SubjectInfo.new.exist(term, day1, timetable1, subject, teacher)
-      SubjectInfo.create(term_id: Term.find_by_season(term).id, day_id: Day.find_by_self(day1).id, timetable_id: Timetable.find_by_self(Timetable.new.get_timetable_number_from_string(timetable1)).id, subject_id: Subject.find_by_name(subject).id, teacher_id: Teacher.find_by_name(teacher).id)
+      SubjectInfo.create(term_id: term_id, day_id: day_id, timetable_id: timetable_id, subject_id: subject_id, teacher_id: teacher_id)
     end
     if day2 && timetable2
+      day_id = Day.find_by_self(day2).id
+      timetable_id = Timetable.find_by_self(Timetable.new.get_timetable_number_from_string(timetable2)).id
       unless SubjectInfo.new.exist(term, day2, timetable2, subject, teacher)
-        SubjectInfo.create(term_id: Term.find_by_season(term).id, day_id: Day.find_by_self(day2).id, timetable_id: Timetable.find_by_self(Timetable.new.get_timetable_number_from_string(timetable2)).id, subject_id: Subject.find_by_name(subject).id, teacher_id: Teacher.find_by_name(teacher).id)
+        SubjectInfo.create(term_id: term_id, day_id: day_id, timetable_id: timetable_id, subject_id: subject_id, teacher_id: teacher_id)
       end
     end
-  end
-end
-for i in 0..@subject_detail_urls.count-1
-  if /yc=(.*?)&ks=(.*?)$/ =~ @subject_detail_urls[i]
-    yc = $1
-    ks = $2
-    data = {"cns" => account, "u_pass" => password, "cns_checkmode" => "1", "yc" => yc, "ks" => ks, "lang" => ""}
-    syllabus_html = client.post_content("https://vu8.sfc.keio.ac.jp/course2007/summary/syll_view.cgi", data).toutf8
-    syllabus_html.scan(/<th nowrap class="ctitle2">(.*?) - (.*?)<br>/) do |ks, subject|
-      syllabus_html = syllabus_html.gsub("\n", "")
-      syllabus_html.scan(/<th class="sub_title1">科目概要（詳細）<\/th>(.*?)<th class="sub_title1">授業シラバス<\/th>(.*?)<th class="sub_title2">主題と目標／授業の手法など<\/th>(.*?)<th class="sub_title2">教材・参考文献<\/th>/) do |syllabus1, str1, syllabus2|
-        syllabus_str = syllabus1 + syllabus2
-        syllabus_str = Sanitize.clean(syllabus_str)
-        words_arr = []
-        mecab = MeCab::Tagger.new
-        node = mecab.parseToNode(syllabus_str)
-        while node do
-          if /名詞/u =~ node.feature.force_encoding("utf-8")
-            words_arr << node.surface
-          end
-          node = node.next
-        end
-        words_arr.uniq!
-        words_arr.each do |words|
-          unless SyllabusWords.new.exist(words, Subject.find_by_name(subject).id)
-            SyllabusWords.create(string: words, subject_id: Subject.find_by_name(subject).id)
+    unless @subjects_name_arr.index(subject)
+      if /yc=(.*?)&ks=(.*?)$/ =~ detail_url
+        yc = $1
+        ks = $2
+        data = {"cns" => account, "u_pass" => password, "cns_checkmode" => "1", "yc" => yc, "ks" => ks, "lang" => ""}
+        syllabus_html = client.post_content("https://vu8.sfc.keio.ac.jp/course2007/summary/syll_view.cgi", data).toutf8
+        syllabus_html.scan(/<th nowrap class="ctitle2">(.*?) - (.*?)<br>/) do |ks, subject|
+          syllabus_html = syllabus_html.gsub("\n", "")
+          syllabus_html.scan(/<th class="sub_title1">科目概要（詳細）<\/th>(.*?)<th class="sub_title1">授業シラバス<\/th>(.*?)<th class="sub_title2">主題と目標／授業の手法など<\/th>(.*?)<th class="sub_title2">教材・参考文献<\/th>/) do |syllabus1, str1, syllabus2|
+            syllabus_str = syllabus1 + syllabus2
+            syllabus_str = Sanitize.clean(syllabus_str)
+            word_arr = []
+            mecab = MeCab::Tagger.new
+            node = mecab.parseToNode(syllabus_str)
+            while node do
+              if /名詞/u =~ node.feature.force_encoding("utf-8")
+                word_arr << node.surface
+              end
+              node = node.next
+            end
+            word_arr.uniq!
+            word_arr.each do |word|
+              subject_info = SubjectInfo.find_by_term_id_and_day_id_and_timetable_id_and_subject_id_and_teacher_id(term_id, day_id, timetable_id, subject_id, teacher_id)
+              unless SyllabusWord.new.exist(word, subject_info)
+                SyllabusWord.create(string: word, subject_info_id: subject_info.id)
+              end
+            end
           end
         end
       end
