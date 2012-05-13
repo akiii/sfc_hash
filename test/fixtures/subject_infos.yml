@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  term_id: 1
+  day_id: 1
+  timetable_id: 1
+  room_id: 1
+  subject_id: 1
+  teacher_id: 1
+
+two:
+  term_id: 1
+  day_id: 1
+  timetable_id: 1
+  room_id: 1
+  subject_id: 1
+  teacher_id: 1
