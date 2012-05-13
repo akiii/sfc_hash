@@ -1,4 +1,12 @@
 class SubjectInfo < ActiveRecord::Base
+  belongs_to :term
+  belongs_to :day
+  belongs_to :timetable
+  belongs_to :subject
+  belongs_to :teacher
+  belongs_to :room
+  has_many :syllabus_words
+  has_many :hashtags
 
   def exist(term, day, timetable, subject, teacher)
     subject = Subject.find_by_name(subject)

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 class Timetable < ActiveRecord::Base
+  has_many :subject_infos
 
   def get_timetable_number_from_string(timetable_string)
     if timetable_string == '１'
