@@ -55,6 +55,14 @@ for i in 0..17 do
     unless Teacher.new.exist(teacher)
           Teacher.create(name: teacher)
     end
+    unless SubjectInfo.new.exist(term, day1, timetable1, subject, teacher)
+      SubjectInfo.create(term_id: Term.find_by_season(term).id, day_id: Day.find_by_self(day1).id, timetable_id: Timetable.find_by_self(Timetable.new.get_timetable_number_from_string(timetable1)).id, subject_id: Subject.find_by_name(subject).id, teacher_id: Teacher.find_by_name(teacher).id)
+    end
+    if day2 && timetable2
+      unless SubjectInfo.new.exist(term, day2, timetable2, subject, teacher)
+        SubjectInfo.create(term_id: Term.find_by_season(term).id, day_id: Day.find_by_self(day2).id, timetable_id: Timetable.find_by_self(Timetable.new.get_timetable_number_from_string(timetable2)).id, subject_id: Subject.find_by_name(subject).id, teacher_id: Teacher.find_by_name(teacher).id)
+      end
+    end
   end
 end
 for i in 0..@subject_detail_urls.count-1
