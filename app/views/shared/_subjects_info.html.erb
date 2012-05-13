@@ -1,0 +1,32 @@
+<div id="subjects_info">
+  <div class="top">
+  </div>
+  <div class="center">
+    <center>
+      <table class="subjects_info">
+        <tr><th>Subject<br />(Teacher)</th><th>Hashtag</th></tr>
+<% if false %>
+          <% for i in 0..@subjects.count-1 do %>
+            <tr><td><%= @subjects[i] %><br />(<%= @teachers[i] %>)</td>
+            <td>
+            <% if @buttons[i] == 0 %>
+            <%= link_to 'new', :action => 'new' %>
+            <% elsif @buttons[i] == 1 %>
+            <%= "" %><br />
+            <%= link_to 'add', :action => 'edit', :hashtag_id => @hashtags[i].id, :todo => 'add_hashtag' %>
+            <% elsif @buttons[i] == 2 %>
+            <% if @hashtags[i].hashtag %>
+            <%= link_to @hashtags[i].hashtag, "https://twitter.com/intent/tweet?text=%23"+@hashtags[i].hashtag[1..@hashtags[i].hashtag.size-1] %><br />
+            <% end %>
+            <%= link_to 'edit', :action => 'edit', :hashtag_id => @hashtags[i].id, :todo => 'edit_hashtag' %>
+          <% end %>
+          </td></tr>
+        <% end %>
+<% end %>
+      </table>
+
+    </center>
+  </div>
+  <div class="bottom">
+  </div>
+</div>
