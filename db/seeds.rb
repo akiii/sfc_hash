@@ -41,10 +41,10 @@ end
 @subject_detail_urls = []
 @syllabus_urls = []
 @subjects_name_arr = []
-for i in 0..16 do
+for i in 0..17 do
   url = "https://vu8.sfc.keio.ac.jp/sfc-sfs/sfs_class/student/class_list.cgi?lang=ja&term=2012s&command=search_cat&cat="+i.to_s+"&id="+id
   url = client.get_content(url).toutf8
-  url.scan(/<li>(.)(.)(.)：(.*?)\((.*?)<a href="(.*?)" target="_blank">(.*?) <\/a>\((.*?)\)/) do |term, day, timetable, ks, str1, detail_url, subject, teacher|
+  url.scan(/<li>(.)(.)(.)(,(.)(.))?：(.*?)\((.*?)<a href="(.*?)" target="_blank">(.*?) <\/a>\((.*?)\)/) do |term, day1, timetable1, str1, day2, timetable2, ks, str2, detail_url, subject, teacher|
     unless Subject.new.exist(subject)
       Subject.create(name: subject)
     end
