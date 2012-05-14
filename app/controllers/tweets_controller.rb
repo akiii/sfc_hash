@@ -12,7 +12,6 @@ class TweetsController < ApplicationController
   end
 
   def get_tweets_of_hashtags
-    puts "called"
     hashtags = Hashtag.all
     hashtags.each do |hashtag|
       get_tweets_of_hashtag(hashtag)
