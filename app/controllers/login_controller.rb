@@ -10,7 +10,6 @@ class LoginController < ApplicationController
     data = {"u_login" => params[:u_login], "u_pass" => params[:u_pass]}
     id = client.post_content("https://vu9.sfc.keio.ac.jp/sfc-sfs/login.cgi", data)
 
-    puts id
     if id =~ /url=(.+?)"/
       id =~ /id=(.+)&type/
       id = $1
