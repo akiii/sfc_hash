@@ -1,0 +1,8 @@
+<div id="tweet">
+  <table class="tweet">
+    <% for tweet in @tweets %>
+      <tr><td><%= image_tag(tweet.profile_image_url) %></td><td><%= link_to "@" + tweet.from_user, "https://twitter.com/#!/" + tweet.from_user %><br /><%= tweet.text %></td></tr>
+    <% end %>
+  </table>
+  <%= paginate @tweets, :window => 2, :outer_window => 2, :left => 2, :right => 2 %>
+</div>

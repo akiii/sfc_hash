@@ -6,11 +6,25 @@ class HomeController < ApplicationController
 
   def index
     @subjects_info = my_subjects_info
+    @tweets = []
     hashtags = Hashtag.all
     hashtags.each do |hashtag|
-      puts hashtag.string
-      puts hashtag.subject_info_id
+      puts hashtag.tweets
+      if hashtag.tweets.count >= 2
+        hashtag.tweets.each do |tweet|
+          @tweets << tweet
+	end
+      elsif hashtag.tweets.count == 1
+        @tweets << hashtag.tweets
+      end
+      @tweets = @tweets.sort_by { |tweet| tweet.created_at }
     end
+    @tweets.reverse!
+    @tweets.each do |tweet|
+      puts tweet.created_at
+    end
+    @tweets = Kaminari.paginate_array(@tweets).page(params[:page]).per(10)
+
   end
 
   def add
