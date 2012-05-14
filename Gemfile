@@ -36,3 +36,4 @@ end
 
 gem 'httpclient'
 gem 'sanitize'
+gem 'twitter'
