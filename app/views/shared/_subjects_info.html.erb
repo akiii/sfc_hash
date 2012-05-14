@@ -10,19 +10,16 @@
 	    <td>
 	    <% if subject_info.hashtags.count > 0 %>
 	      <% subject_info.hashtags.each do |hashtag| %>
-                <% hashtag %><%= 'edit' %>
+	        <%= link_to hashtag.string, "https://twitter.com/intent/tweet?text=%23"+hashtag.string.slice(1..hashtag.string.size-1) %><br /
+	        <%= hashtag.string %>
+                <%= link_to 'edit', :subject_info_id => subject_info.id, :action => 'edit' %>
 	      <% end %>
 	    <% else %>
               <%= link_to 'add', :subject_info_id => subject_info.id, :action => 'add' %>
 	    <% end %>
 	    </td></tr>
 	  <% end %>
-<% if false %>
-            <%= link_to 'add', :action => 'edit', :hashtag_id => @hashtags[i].id, :todo => 'add_hashtag' %>
-            <%= link_to @hashtags[i].hashtag, "https://twitter.com/intent/tweet?text=%23"+@hashtags[i].hashtag[1..@hashtags[i].hashtag.size-1] %><br />
-<% end %>
       </table>
-
     </center>
   </div>
   <div class="bottom">
