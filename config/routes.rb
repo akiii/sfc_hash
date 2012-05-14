@@ -1,7 +1,7 @@
 SfcHash::Application.routes.draw do
   get "login/submit"
   resources :login
-  resources :home, :only => [:index, :add] do
+  resources :home, :only => [:index, :add, :edit] do
   end
 
   # The priority is based upon order of creation:
@@ -62,5 +62,6 @@ SfcHash::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
   match 'login/submit' => 'login#submit'
   match 'home/add/:subject_info_id' => 'home#add'
+  match 'home/edit/:subject_info_id' => 'home#edit'
   match 'home/submit/:state' => 'home#submit'
 end
