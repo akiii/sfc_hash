@@ -3,3 +3,10 @@
 
 en:
   hello: "Hello world"
+  views:
+    pagination:
+      first: "最初"
+      previous: "&lt; 前"
+      next: "次 &gt;"
+      last: "最後"
+      truncate: ...
