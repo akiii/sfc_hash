@@ -1,7 +1,8 @@
 SfcHash::Application.routes.draw do
   get "login/submit"
   resources :login
-  resources :home
+  resources :home, :only => [:index, :add] do
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -60,4 +61,6 @@ SfcHash::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
   match 'login/submit' => 'login#submit'
+  match 'home/add/:subject_info_id' => 'home#add'
+  match 'home/submit/:state' => 'home#submit'
 end
