@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 class HomeController < ApplicationController
+  before_filter :require_login
+
   include MySubjectsInfoHelper
 
   def index
     @subjects_info = my_subjects_info
-    puts "=============="
     hashtags = Hashtag.all
     hashtags.each do |hashtag|
       puts hashtag.string
@@ -15,6 +16,10 @@ class HomeController < ApplicationController
   def add
     @subject_info = SubjectInfo.find(params[:subject_info_id])
     @room = Room.all
+  end
+
+  def edit
+
   end
 
   def submit
@@ -39,4 +44,9 @@ class HomeController < ApplicationController
     redirect_to :action => 'index'
   end
 
+   def logout
+    session[:id] = nil
+    redirect_to :controller => 'login', :action => 'index'
+  end
+ 
 end
