@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  string: MyString
+  subject_info_id: 1
+  point: 1
+
+two:
+  string: MyString
+  subject_info_id: 1
+  point: 1
