@@ -1,6 +1,10 @@
+# -*- coding: utf-8 -*-
 class TweetsController < ApplicationController
 
   require 'twitter'
+  require 'MeCab'
+
+  include TweetsHelper
 
   def initialize
     Twitter.configure do |config|
@@ -18,22 +22,20 @@ class TweetsController < ApplicationController
     end
   end
 
-  def get_tweets_of_hashtag(hashtag)
+  def get_hashtags_canditate
+#    start_time = Time.now
+    puts HashtagCandidate.all.count
     initialize
-    tweets = Twitter.search(hashtag.string)
-    save_tweets(tweets, hashtag)
-  end
-
-  def save_tweets(new_tweets, hashtag)
-    new_tweets.each do |tweet|
-      t = Tweet.new
-      t.hashtag_id = hashtag.id
-      t.from_user = tweet.from_user
-      t.profile_image_url = tweet.profile_image_url
-      t.text = tweet.text
-      t.created_at = tweet.created_at
-      t.save
+    tweets = Twitter.list_timeline("sfc_list", "sfc-all", options = {:since_id => $list_timeline_last_tweet_id })
+    $list_timeline_last_tweet_id = tweets[0].id
+#    tweets = Tweet.all
+    tweets = include_hashtag_tweets(tweets)
+    tweets.each do |tweet|
+#      hashtag = hashtag_from_tweet(tweet)
+#      save_hashtag_canditate(tweet, hashtag)
     end
+#    end_time = Time.now
+#    puts "処理概要:#{(end_time - start_time).to_s}s"
   end
 
 end
