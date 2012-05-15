@@ -66,4 +66,5 @@ SfcHash::Application.routes.draw do
   match 'home/submit/:state' => 'home#submit'
   match 'home/logout' => 'home#logout'
   match 'tweets/get_tweets_of_hashtags' => 'tweets#get_tweets_of_hashtags'
+  match 'tweets/get_hashtags_canditate' => 'tweets#get_hashtags_canditate'
 end
