@@ -24,15 +24,14 @@ class TweetsController < ApplicationController
 
   def get_hashtags_canditate
 #    start_time = Time.now
-    puts HashtagCandidate.all.count
     initialize
     tweets = Twitter.list_timeline("sfc_list", "sfc-all", options = {:since_id => $list_timeline_last_tweet_id })
     $list_timeline_last_tweet_id = tweets[0].id
 #    tweets = Tweet.all
     tweets = include_hashtag_tweets(tweets)
     tweets.each do |tweet|
-#      hashtag = hashtag_from_tweet(tweet)
-#      save_hashtag_canditate(tweet, hashtag)
+      hashtag = hashtag_from_tweet(tweet)
+      save_hashtag_canditate(tweet, hashtag)
     end
 #    end_time = Time.now
 #    puts "処理概要:#{(end_time - start_time).to_s}s"
