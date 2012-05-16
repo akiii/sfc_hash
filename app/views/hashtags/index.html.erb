@@ -1,0 +1,31 @@
+<h1>Hashtags</h1>
+
+<table>
+  <tr>
+    <th>Hashtag</th>
+    <th>Term</th>
+    <th>Day</th>
+    <th>Time</th>
+    <th>Subject</th>
+    <th>Teacher</th>
+    <th>Room</th>
+    <th></th>
+  </tr>
+
+<% @subjects_info.each do |subject_info| %>
+  <tr>
+    <td>
+    <% subject_info.hashtags.each do |hashtag| %>
+      <%= hashtag.string %>
+    <% end %>
+    </td>
+    <td><%= subject_info.term.season %></td>
+    <td><%= subject_info.day.self %></td>
+    <td><%= subject_info.timetable.self %></td>
+    <td><%= subject_info.subject.name %></td>
+    <td><%= subject_info.teacher.name %></td>
+    <td><% if subject_info.room %><%= subject_info.room.name %><% end %></td>
+    <td><%= link_to 'edit', :subject_info_id => subject_info.id, :controller => 'home', :action => 'add' %></td>
+  </tr>
+<% end %>
+</table>
