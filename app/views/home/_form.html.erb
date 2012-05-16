@@ -1,0 +1,18 @@
+<%= form_tag :state => 'add', :subject_info_id => @subject_info, :controller => 'home', :action => 'submit' %>
+<%= "ハッシュタグ：" %><%= text_field :hashtag, :string, :size => 25 %><br />
+<%= "学期：#{@subject_info.term.season}学期" %><br />
+<%= "学期：#{@subject_info.day.self}曜日" %><br />
+<%= "時限：#{@subject_info.timetable.self}限" %><br />
+<%= "講義名：#{@subject_info.subject.name}" %><br />
+<%= "講師名：#{@subject_info.teacher.name}" %><br />
+<%= '教室：' %>
+<% if @subject_info.room %>
+  <% default_room_id = @subject_info.room.id %>
+  <%= select_tag 'room', options_from_collection_for_select(@room, :id, :name, @subject_info.room.id) %>
+<% else %>
+  <% default_room_id = 1 %>
+  <%= select_tag 'room', options_from_collection_for_select(@room, :id, :name, 1) %>
+<% end %>
+<br />
+
+<%= submit_tag 'submit' %>
