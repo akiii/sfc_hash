@@ -9,7 +9,6 @@ class HomeController < ApplicationController
     @tweets = []
     hashtags = Hashtag.all
     hashtags.each do |hashtag|
-      puts hashtag.tweets
       if hashtag.tweets.count >= 2
         hashtag.tweets.each do |tweet|
           @tweets << tweet
@@ -20,13 +19,9 @@ class HomeController < ApplicationController
       @tweets = @tweets.sort_by { |tweet| tweet.created_at }
     end
     @tweets.reverse!
-    @tweets.each do |tweet|
-      puts tweet.created_at
-    end
     @tweets = Kaminari.paginate_array(@tweets).page(params[:page]).per(10)
 
   end
-
   def add
     @subject_info = SubjectInfo.find(params[:subject_info_id])
     @room = Room.all
@@ -42,7 +37,7 @@ class HomeController < ApplicationController
     subject_info.save
     if /^#(.+?)$/ =~ params[:hashtag][:string]
       if Hashtag.find_by_string(params[:hashtag][:string])
-        hashtag = Hashtag.find_by_string(params[:hashtag][:string]
+        hashtag = Hashtag.find_by_string(params[:hashtag][:string])
       else
         hashtag = Hashtag.new
       end
@@ -56,15 +51,17 @@ class HomeController < ApplicationController
     end
 
     if params[:state] == 'add'
+
     elsif params[:state] == 'edit'
+
     end
 
     redirect_to :action => 'index'
   end
 
-   def logout
+  def logout
     session[:id] = nil
     redirect_to :controller => 'login', :action => 'index'
   end
- 
+
 end
