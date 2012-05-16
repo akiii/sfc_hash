@@ -3,6 +3,7 @@ SfcHash::Application.routes.draw do
   resources :login
   resources :home, :only => [:index, :add, :edit, :logout] do
   end
+  resources :hashtags, :only => [:index, :edit]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -67,4 +68,5 @@ SfcHash::Application.routes.draw do
   match 'home/logout' => 'home#logout'
   match 'tweets/get_tweets_of_hashtags' => 'tweets#get_tweets_of_hashtags'
   match 'tweets/get_hashtags_canditate' => 'tweets#get_hashtags_canditate'
+  match 'hashtags/edit/:subject_info' => 'hashtags#edit'
 end
