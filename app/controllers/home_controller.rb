@@ -16,9 +16,8 @@ class HomeController < ApplicationController
       elsif hashtag.tweets.count == 1
         @tweets << hashtag.tweets
       end
-      @tweets = @tweets.sort_by { |tweet| tweet.created_at }
     end
-    @tweets.reverse!
+    @tweets.sort_by { |tweet| tweet.created_at }
     @tweets = Kaminari.paginate_array(@tweets).page(params[:page]).per(10)
 
   end
