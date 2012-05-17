@@ -3,22 +3,12 @@ class HomeController < ApplicationController
   before_filter :require_login
 
   include MySubjectsInfoHelper
+  include TweetsHelper
 
   def index
     @subjects_info = my_subjects_info
     hashtags = []
-    @tweets = []
-    @subjects_info.each do |subject_info|
-      hashtags << subject_info.hashtags
-    end
-    hashtags.flatten!
-    hashtags.each do |hashtag|
-      @tweets << Tweet.find_all_by_hashtag_id(hashtag.id)
-    end
-    @tweets.flatten!
-    @tweets = @tweets.sort_by { |tweet| tweet.created_at }
-    @tweets.reverse!
-    @tweets = Kaminari.paginate_array(@tweets).page(params[:page]).per(10)
+    @tweets = get_tweets_from_subjects_info(@subjects_info)
   end
 
   def add
