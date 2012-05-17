@@ -7,7 +7,11 @@ class HomeController < ApplicationController
   def index
     @subjects_info = my_subjects_info
     @tweets = []
-    hashtags = Hashtag.all
+    hashtags = []
+    @subjects_info.each do |subject_info|
+      hashtags << subject_info.hashtags
+    end
+    hashtags.flatten!
     hashtags.each do |hashtag|
       @tweets << Tweet.find_all_by_hashtag_id(hashtag.id)
     end
