@@ -1,0 +1,15 @@
+<%= form_tag({:controller => 'search', :action => 'submit'}) do %>
+  <%= label_tag '学期：' %>
+  <%= select_tag 'term', options_for_select(@terms), :include_blank => true, :style => "width: 50%" %><br />
+  <%= label_tag '曜日：' %>
+  <%= select_tag 'day', options_for_select(@days), :include_blank => true, :style => "width: 50%" %><br />
+  <%= label_tag '時間：' %>
+  <%= select_tag 'timetable', options_for_select(@timetables), :include_blank => true, :style => "width: 50%" %><br />
+  <%= label_tag '講義：' %>
+  <%= select_tag 'subject', options_for_select(@subjects), :include_blank => true, :style => "width: 50%" %><br />
+  <%= label_tag '講師：' %>
+  <%= select_tag 'teacher', options_for_select(@teachers), :include_blank => true, :style => "width: 50%" %><br />
+  <%= label_tag '教室：' %>
+  <%= select_tag 'room', options_for_select(@rooms), :include_blank => true, :style => "width: 50%" %><br />
+  <%= submit_tag "submit" %>
+<% end %>

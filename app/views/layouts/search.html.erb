@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SFC-HASH</title>
+  <%= stylesheet_link_tag "home" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div id="wrapper">
+    <%= yield :header %>
+    <div id="content">
+      <%= yield :form %>
+      <%= yield :tweets %>
+      <%= yield :subjects_info %>
+    </div>
+    <%= yield :footer %>
+  </div>
+</body>
+</html>
