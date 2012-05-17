@@ -6,8 +6,8 @@ class HomeController < ApplicationController
 
   def index
     @subjects_info = my_subjects_info
-    @tweets = []
     hashtags = []
+    @tweets = []
     @subjects_info.each do |subject_info|
       hashtags << subject_info.hashtags
     end
@@ -16,7 +16,8 @@ class HomeController < ApplicationController
       @tweets << Tweet.find_all_by_hashtag_id(hashtag.id)
     end
     @tweets.flatten!
-    @tweets.sort_by { |tweet| tweet.created_at }
+    @tweets = @tweets.sort_by { |tweet| tweet.created_at }
+    @tweets.reverse!
     @tweets = Kaminari.paginate_array(@tweets).page(params[:page]).per(10)
   end
 
