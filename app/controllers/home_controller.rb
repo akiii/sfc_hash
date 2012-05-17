@@ -9,18 +9,13 @@ class HomeController < ApplicationController
     @tweets = []
     hashtags = Hashtag.all
     hashtags.each do |hashtag|
-      if hashtag.tweets.count >= 2
-        hashtag.tweets.each do |tweet|
-          @tweets << tweet
-	end
-      elsif hashtag.tweets.count == 1
-        @tweets << hashtag.tweets
-      end
+      @tweets << Tweet.find_all_by_hashtag_id(hashtag.id)
     end
+    @tweets.flatten!
     @tweets.sort_by { |tweet| tweet.created_at }
     @tweets = Kaminari.paginate_array(@tweets).page(params[:page]).per(10)
-
   end
+
   def add
     @subject_info = SubjectInfo.find(params[:subject_info_id])
     @room = Room.all
