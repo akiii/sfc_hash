@@ -37,4 +37,11 @@ class TweetsController < ApplicationController
 #    puts "処理概要:#{(end_time - start_time).to_s}s"
   end
 
+  def get_tweets_of_hashtag_canditate
+    initialize
+    tweets = Twitter.list_timeline("sfc_list", "sfc-all", options = {:since_id => $list_timeline_last_tweet_id })
+    $list_timeline_last_tweet_id = tweets[0].id
+    save_tweets_of_hashtag_candidate(tweets)
+  end
+
 end

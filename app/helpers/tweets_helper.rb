@@ -126,4 +126,14 @@ module TweetsHelper
     end
   end
 
+  def save_tweets_of_hashtag_candidate(tweets)
+    tweets = include_hashtag_tweets(tweets)
+    tweets.each do |tweet|
+      hashtag_candidate_tweet = HashtagCandidateTweet.new
+      hashtag_candidate_tweet.text = tweet.text
+      hashtag_candidate_tweet.created_at = tweet.created_at
+      hashtag_candidate_tweet.save
+    end
+  end
+
 end
