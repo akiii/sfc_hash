@@ -11,10 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120514054115) do
+ActiveRecord::Schema.define(:version => 20120522142607) do
 
   create_table "days", :force => true do |t|
     t.string   "self"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "hashtag_candidate_tweets", :force => true do |t|
+    t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
