@@ -11,8 +11,8 @@
 	    <% if subject_info.hashtags.count > 0 %>
 	      <% subject_info.hashtags.each do |hashtag| %>
 	        <%= link_to hashtag.string, "https://twitter.com/intent/tweet?text=%23"+hashtag.string.slice(1..hashtag.string.size-1) %><br /
-	        <%= hashtag.string %>
-                <%= link_to 'edit', :subject_info_id => subject_info.id, :controller => 'home', :action => 'edit' %>
+	        <%= hashtag.string %><br />
+                <%= link_to 'edit', :subject_info_id => subject_info.id, :controller => 'home', :action => 'add' %>
 	      <% end %>
 	    <% else %>
               <%= link_to 'add', :subject_info_id => subject_info.id, :controller => 'home', :action => 'add' %>
