@@ -70,7 +70,6 @@ SfcHash::Application.routes.draw do
   match 'home/logout' => 'home#logout'
   match 'search/submit' => 'search#submit'
   match 'tweets/get_tweets_of_hashtags' => 'tweets#get_tweets_of_hashtags'
-  match 'tweets/get_hashtags_canditate' => 'tweets#get_hashtags_canditate'
-  match 'tweets/get_tweets_of_hashtag_canditate' => 'tweets#get_tweets_of_hashtag_canditate'
+  match 'tweets/croll_sfc_lists_timeline' => 'tweets#croll_sfc_lists_timeline'
   match 'hashtags/edit/:subject_info' => 'hashtags#edit'
 end
