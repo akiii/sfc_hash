@@ -1,0 +1,17 @@
+<h1>Hashtag Candidate</h1>
+<table>
+  <tr>
+    <th>Hashtag</th>
+    <th>Subject</th>
+    <th>Point</th>
+  </tr>
+
+<% @hashtags_candidate.each do |hashtag_candidate| %>
+  <tr>
+    <td><%= hashtag_candidate.string %></td>
+    <td><%= hashtag_candidate.subject_info.subject.name %></td>
+    <td><%= hashtag_candidate.point %></td>
+  </tr>
+<% end %>
+</table>
+<%= paginate @hashtags_candidate, :window => 2, :outer_window => 2, :left => 2, :right => 2 %>

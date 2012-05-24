@@ -1,0 +1,2 @@
+module HashtagsCandidateHelper
+end
