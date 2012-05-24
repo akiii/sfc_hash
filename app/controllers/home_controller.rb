@@ -13,11 +13,8 @@ class HomeController < ApplicationController
 
   def add
     @subject_info = SubjectInfo.find(params[:subject_info_id])
+    @hashtag = Hashtag.find_by_subject_info_id(@subject_info.id)
     @room = Room.all
-  end
-
-  def edit
-
   end
 
   def submit
@@ -36,12 +33,6 @@ class HomeController < ApplicationController
       flash[:error] = "ハッシュタグが正しくありません。"
       redirect_to :action => 'add', :subject_info_id => params[:subject_info_id]
       return
-    end
-
-    if params[:state] == 'add'
-
-    elsif params[:state] == 'edit'
-
     end
 
     redirect_to :action => 'index'
