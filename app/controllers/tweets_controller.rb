@@ -23,25 +23,37 @@ class TweetsController < ApplicationController
   end
 
   def get_hashtags_canditate
-#    start_time = Time.now
-    initialize
-    tweets = Twitter.list_timeline("sfc_list", "sfc-all", options = {:since_id => $list_timeline_last_tweet_id })
-    $list_timeline_last_tweet_id = tweets[0].id
-#    tweets = Tweet.all
-    tweets = include_hashtag_tweets(tweets)
-    tweets.each do |tweet|
-      hashtag = hashtag_from_tweet(tweet)
-      save_hashtag_canditate(tweet, hashtag)
-    end
-#    end_time = Time.now
-#    puts "処理概要:#{(end_time - start_time).to_s}s"
+#    initialize
+#    tweets = Twitter.list_timeline("sfc_list", "sfc-all", options = {:since_id => $list_timeline_last_tweet_id })
+#    $list_timeline_last_tweet_id = tweets[0].id
+#    tweets = include_hashtag_tweets(tweets)
+#    tweets.each do |tweet|
+#      hashtag = hashtag_from_tweet(tweet)
+#      save_hashtag_canditate(tweet, hashtag)
+#    end
   end
 
-  def get_tweets_of_hashtag_canditate
+  def get_and_croll_list_tweets(list_number, last_tweet_id)
     initialize
-    tweets = Twitter.list_timeline("sfc_list", "sfc-all", options = {:since_id => $list_timeline_last_tweet_id_2 })
-    $list_timeline_last_tweet_id_2 = tweets[0].id
-    save_tweets_of_hashtag_candidate(tweets)
+    listname = ""
+    if list_number == 1
+      list_name = "sfc-all"
+    elsif list_number == 2
+      list_name = "sfc-all2"
+    end
+    tweets = Twitter.list_timeline("sfc_list", list_name, options = {:since_id => last_tweet_id })
+    if tweets.count > 0
+      last_tweet_id = tweets[0].id
+      tweets = include_hashtag_tweets(tweets)
+      save_tweets_of_hashtag_candidate(tweets)
+      save_hashtag_canditate(tweets)
+    end
+    return last_tweet_id
+  end
+
+  def croll_sfc_lists_timeline
+    $last_tweet_id_of_tweets1 = get_and_croll_list_tweets(1, $last_tweet_id_of_tweets1)
+    $last_tweet_id_of_tweets2 = get_and_croll_list_tweets(2, $last_tweet_id_of_tweets2)
   end
 
 end

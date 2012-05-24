@@ -78,56 +78,58 @@ module TweetsHelper
     return word_arr
   end
 
-  def save_hashtag_canditate(tweet, hashtag)
-    syllabus_words = []
-    word_arr = word_arr(tweet)
-    sws_all_count = SyllabusWord.all.count
-    word_arr.each do |word|
-      sws = SyllabusWord.find_all_by_string(word)
-      sws_count = sws.count
-      sws.each do |sw|
-        sw.point = sws_all_count - sws_count
-        syllabus_words << sw
+  def save_hashtag_canditate(tweets)
+    tweets.each do |tweet|
+      hashtag = hashtag_from_tweet(tweet)
+      syllabus_words = []
+      word_arr = word_arr(tweet)
+      sws_all_count = SyllabusWord.all.count
+      word_arr.each do |word|
+        sws = SyllabusWord.find_all_by_string(word)
+        sws_count = sws.count
+        sws.each do |sw|
+          sw.point = sws_all_count - sws_count
+          syllabus_words << sw
+        end
       end
-    end
 
-    subject_info_and_point = Hash.new
-    subject_info_and_point_arr = []
-    syllabus_words.each do |syllabus_word|
-      unless subject_info_and_point.key?(syllabus_word.subject_info)
-        subject_info_and_point[syllabus_word.subject_info] = 0
+      subject_info_and_point = Hash.new
+      subject_info_and_point_arr = []
+      syllabus_words.each do |syllabus_word|
+        unless subject_info_and_point.key?(syllabus_word.subject_info)
+          subject_info_and_point[syllabus_word.subject_info] = 0
+        end
+        subject_info_and_point[syllabus_word.subject_info] = subject_info_and_point[syllabus_word.subject_info] + syllabus_word.point
       end
-      subject_info_and_point[syllabus_word.subject_info] = subject_info_and_point[syllabus_word.subject_info] + syllabus_word.point
-    end
 
-    max_point = 0
-    subject_info_and_point.to_a.sort_by{ |x, y|; [y, x]}.reverse.each do |key, max|
-      if max_point < max
-        max_point = max
+      max_point = 0
+      subject_info_and_point.to_a.sort_by{ |x, y|; [y, x]}.reverse.each do |key, max|
+        if max_point < max
+          max_point = max
+        end
       end
-    end
-    subject_info_and_point.each_pair do |key, value|
-      unless value == max_point
-        subject_info_and_point.delete(key)
+      subject_info_and_point.each_pair do |key, value|
+        unless value == max_point
+          subject_info_and_point.delete(key)
+        end
       end
-    end
 
-    subject_info_and_point.each_pair do |key, value|
-      hashtagCandidate = HashtagCandidate.find_by_string_and_subject_info_id(hashtag, key.id)
-      if hashtagCandidate
-        hashtagCandidate.point = hashtagCandidate.point + 1
-      else
-        hashtagCandidate = HashtagCandidate.new
-        hashtagCandidate.string = hashtag
-        hashtagCandidate.subject_info_id = key.id
-        hashtagCandidate.point = 1
+      subject_info_and_point.each_pair do |key, value|
+        hashtagCandidate = HashtagCandidate.find_by_string_and_subject_info_id(hashtag, key.id)
+        if hashtagCandidate
+          hashtagCandidate.point = hashtagCandidate.point + 1
+        else
+          hashtagCandidate = HashtagCandidate.new
+          hashtagCandidate.string = hashtag
+          hashtagCandidate.subject_info_id = key.id
+          hashtagCandidate.point = 1
+        end
+        hashtagCandidate.save
       end
-      hashtagCandidate.save
     end
   end
 
   def save_tweets_of_hashtag_candidate(tweets)
-    tweets = include_hashtag_tweets(tweets)
     tweets.each do |tweet|
       hashtag_candidate_tweet = HashtagCandidateTweet.new
       hashtag_candidate_tweet.text = tweet.text
