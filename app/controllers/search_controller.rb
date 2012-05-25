@@ -31,6 +31,9 @@ class SearchController < ApplicationController
       @rooms << room.name
     end
     @subjects_info = $subjects_info
+    unless $subjects_info
+      @subjects_info = []
+    end
     @tweets = get_tweets_from_subjects_info(@subjects_info)
   end
 
