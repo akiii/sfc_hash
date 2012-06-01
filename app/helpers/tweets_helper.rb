@@ -23,7 +23,6 @@ module TweetsHelper
   def get_tweets_of_hashtag(hashtag)
     initialize
     tweets = Twitter.search(hashtag.string)
-    $hashtag_last_tweet_id = tweets[0].id
     save_tweets(tweets, hashtag)
   end
 
