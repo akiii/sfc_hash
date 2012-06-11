@@ -6,6 +6,7 @@ SfcHash::Application.routes.draw do
   resources :hashtags, :only => [:index, :edit]
   resources :hashtags_candidate, :only => [:index]
   resources :search, :only => [:index]
+  resources :works, :only => [:index]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
