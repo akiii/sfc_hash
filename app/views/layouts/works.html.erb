@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SFC-HASH</title>
+  <%= stylesheet_link_tag "works" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div id="wrapper">
+    <%= yield :header %>
+    <div id="content">
+      <%= yield :content %>
+    </div>
+    <%= yield :footer %>
+  </div>
+</body>
+</html>
