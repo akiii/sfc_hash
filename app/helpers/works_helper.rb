@@ -28,6 +28,7 @@ module WorksHelper
 	end
       end
     end
+    my_works = sort(my_works)
     return my_works;
   end
 
@@ -36,7 +37,7 @@ module WorksHelper
     $client.get_content(my_subject.url).split('\n').each do |page_row|
       page_row = page_row.toutf8.gsub("\n", "")
 
-      page_row.scan(/target=report>(.*?)<\/a><font color="green">( ?)- (.*?)<span class=en>(.*?)<\/span><\/font><BR>　\(〆切<span class=en>deadline<\/span>: (.*?) (.*?), 提出者(.*?)名 <span class=en>/) do |title, str1, situation, str2, date, time, didSubmissionStudentCount|
+      page_row.scan(/target=report>「(.*?)」<\/a><(.*?)>( ?)- (.*?)<span class=en>(.*?)<\/span><\/font><BR>　\(〆切<span class=en>deadline<\/span>: (.*?) (.*?), 提出者(.*?)名 <span class=en>/) do |title, str1, str2, situation, str3, date, time, didSubmissionStudentCount|
         didSubmission = false
         if /(.*?)提出済/ =~ situation
           didSubmission = true
@@ -48,6 +49,18 @@ module WorksHelper
 
     end
     return works
-  end 
+  end
+
+  def sort(my_works)
+    arr = []
+    my_works.each do |work|
+      if work.didSubmission == true
+        arr << work
+      else
+        arr.unshift(work)
+      end
+    end
+    return arr
+  end
 
 end
