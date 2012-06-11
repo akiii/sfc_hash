@@ -1,0 +1,24 @@
+<table class="content">
+  <tr>
+  <th>講義名</th>
+  <th>講師名</th>
+  <th>課題</th>
+  <th>状況</th>
+  <th>期限</th>
+  <th>人数</th>
+  </tr>
+  <% @my_works.each do |work| %>
+    <tr>
+    <td><%= work.subject %></td>
+    <td><%= work.teacher %></td>
+    <td><%= work.title %></td>
+    <td><%= work.limitDate %><%= work.limitTime %></td>
+    <% if work.didSubmission == true %>
+      <td style="color:#32cd32"><%= "済" %></td>
+    <% else %>
+      <td style="color:#ff0000"><%= "未" %></td>
+    <% end %>
+    <td><%= work.didSubmissionStudentCount %></td>
+    </tr>
+  <% end %>
+</table>
