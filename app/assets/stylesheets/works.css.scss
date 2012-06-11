@@ -127,78 +127,26 @@ body{
         width: 920px;
         float: left;
 }
-#error{
-        font-size: medium;
-        color: #ff0000;
+.content{
+	width: 90%;
+	margin-top: 4%;
+	margin-bottom: 4%;
+	margin-left: 5%;
+	margin-right: 5%;
+        color: #696969;
+	border-color: #c0c0c0;
+        border-top: 1px solid #c0c0c0;
+        border-left: 1px solid #c0c0c0;
 }
-#tweet{
-        width: 50%;
-        height: auto;
-        float: left;
+.content th{
+        border-right: 1px solid #c0c0c0;
+        border-bottom: 1px solid #c0c0c0;
 }
-.tweet{
-        margin-top: 20px;
-        margin-left: 5%;
-        margin-bottom: 5%;
-        border-collapse: collapse;
-        border-spacing:0;
-        text-align: left;
-}
-.tweet th{
-}
-.tweet td{
-        padding-top: 10px;
-        padding-bottom: 0px;
-        border-top: 1px solid #000000;
-        border-bottom: 1px solid #000000;
-}
-#subjects_info{
-        width: 50%;
-        float:right;
-}
-.subjects_info{
-        color: #000000;
-        width: 90%;
-        border-top: 1px solid #ffffff;
-        border-left: 1px solid #ffffff;
-}
-.subjects_info th{
-        border-right: 1px solid #ffffff;
-        border-bottom: 1px solid #ffffff;
-}
-.subjects_info td{
+.content td{
         text-align: center;
-        border-right: 1px solid #ffffff;
-        border-bottom: 1px solid #ffffff;
+        border-right: 1px solid #c0c0c0;
+        border-bottom: 1px solid #c0c0c0;
 }
-#subjects_info .top{
-        background-image: url("home/board_top.png");
-        margin-top: 20px;
-        margin-left: 5%;
-        width: 400px;
-        height: 20px;
-}
-#subjects_info .center{
-        background-image: url("home/board_middle.png");
-        margin-left: 5%;
-        width: 400px;
-        height: auto;
-}
-#subjects_info .bottom{
-        background-image: url("home/board_bottom.png");
-        background-position: 0px -80px;
-        margin-left: 5%;
-        margin-bottom: 20px;
-        width: 400px;
-        height: 20px;
-}
-/*
-#main{
-        width: 50%;
-        height: auto;
-        float: right;
-}
-*/
 #footer{
         color: #ffffff;
         background-image: url("common/footer.png");
