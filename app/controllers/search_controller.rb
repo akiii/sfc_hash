@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
   before_filter :require_login
+  layout "search"
 
   include MySubjectsInfoHelper
   include SearchHelper
