@@ -4,9 +4,11 @@ module MySubjectsInfoHelper
   require 'httpclient'
 
   def add_subject_info_to_arr(my_subjects_info_arr, subject, teacher)
-    subject_info = SubjectInfo.find_by_subject_id_and_teacher_id(subject.id, teacher.id)
-    unless my_subjects_info_arr.index(subject_info)
-      my_subjects_info_arr << subject_info
+    if subject && teacher
+      subject_info = SubjectInfo.find_by_subject_id_and_teacher_id(subject.id, teacher.id)
+      unless my_subjects_info_arr.index(subject_info)
+        my_subjects_info_arr << subject_info
+      end
     end
     return my_subjects_info_arr
   end
@@ -31,6 +33,8 @@ module MySubjectsInfoHelper
 	    end
 	  elsif teacher.count == 1
 	    subject.each do |sub|
+	      puts sub.id
+	      puts teacher[0].id
 	      my_subjects_info_arr = add_subject_info_to_arr(my_subjects_info_arr, sub, teacher[0])
 	    end
 	  end

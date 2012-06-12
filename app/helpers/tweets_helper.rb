@@ -4,18 +4,18 @@ module TweetsHelper
   def get_tweets_from_subjects_info(subjects_info)
     hashtags = []
     tweets = []
-    if subjects_info.count > 0
-      subjects_info.each do |subject_info|
+    subjects_info.each do |subject_info|
+      if subject_info
         hashtags << subject_info.hashtags
       end
-      hashtags.flatten!
-      hashtags.each do |hashtag|
-        tweets << Tweet.find_all_by_hashtag_id(hashtag.id)
-      end
-      tweets.flatten!
-      tweets = tweets.sort_by { |tweet| tweet.created_at }
-      tweets.reverse!
     end
+    hashtags.flatten!
+    hashtags.each do |hashtag|
+      tweets << Tweet.find_all_by_hashtag_id(hashtag.id)
+    end
+    tweets.flatten!
+    tweets = tweets.sort_by { |tweet| tweet.created_at }
+    tweets.reverse!
     tweets = Kaminari.paginate_array(tweets).page(params[:page]).per(10)
     return tweets
   end
