@@ -6,18 +6,20 @@
       <table class="subjects_info">
         <tr><th>Subject<br />(Teacher)</th><th>Hashtag</th></tr>
 	  <% @subjects_info.each do |subject_info| %>
-            <tr><td><%= subject_info.subject.name %><br />(<%= subject_info.teacher.name %>)</td>
-	    <td>
-	    <% if subject_info.hashtags.count > 0 %>
-	      <% subject_info.hashtags.each do |hashtag| %>
-	        <%= link_to hashtag.string, "https://twitter.com/intent/tweet?text=%23"+hashtag.string.slice(1..hashtag.string.size-1) %><br /
-	        <%= hashtag.string %><br />
-                <%= link_to 'edit', :subject_info_id => subject_info.id, :controller => 'home', :action => 'add' %>
+	    <% if subject_info %>
+              <tr><td><%= subject_info.subject.name %><br />(<%= subject_info.teacher.name %>)</td>
+  	      <td>
+	      <% if subject_info.hashtags.count > 0 %>
+	        <% subject_info.hashtags.each do |hashtag| %>
+	          <%= link_to hashtag.string, "https://twitter.com/intent/tweet?text=%23"+hashtag.string.slice(1..hashtag.string.size-1) %><br /
+	          <%= hashtag.string %><br />
+                  <%= link_to 'edit', :subject_info_id => subject_info.id, :controller => 'home', :action => 'add' %>
+	        <% end %>
+	      <% else %>
+                <%= link_to 'add', :subject_info_id => subject_info.id, :controller => 'home', :action => 'add' %>
 	      <% end %>
-	    <% else %>
-              <%= link_to 'add', :subject_info_id => subject_info.id, :controller => 'home', :action => 'add' %>
+	      </td></tr>
 	    <% end %>
-	    </td></tr>
 	  <% end %>
       </table>
     </center>
