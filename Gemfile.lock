@@ -110,6 +110,7 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    tfidf_ja (0.2.1)
     therubyracer (0.9.5)
       libv8 (~> 3.3.10)
     thin (1.3.1)
@@ -146,6 +147,7 @@ DEPENDENCIES
   rails (= 3.1.0)
   sanitize
   sass-rails (~> 3.1.0)
+  tfidf_ja
   therubyracer
   thin
   turn
