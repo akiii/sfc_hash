@@ -3,7 +3,7 @@ class CreateHashtagCandidates < ActiveRecord::Migration
     create_table :hashtag_candidates do |t|
       t.string :string
       t.integer :subject_info_id
-      t.integer :point
+      t.float :point
 
       t.timestamps
     end

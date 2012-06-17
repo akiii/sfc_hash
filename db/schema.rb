@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120522142607) do
+ActiveRecord::Schema.define(:version => 20120616044400) do
 
   create_table "days", :force => true do |t|
     t.string   "self"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20120522142607) do
   create_table "hashtag_candidates", :force => true do |t|
     t.string   "string"
     t.integer  "subject_info_id"
-    t.integer  "point"
+    t.float    "point"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
