@@ -14,7 +14,7 @@ class SyllabusWord < ActiveRecord::Base
   def set_point
     syllabus_words_count_include_string = SyllabusWord.find_all_by_subject_info_id_and_string(self.subject_info_id, self.string).count
     syllabus_words_count = SyllabusWord.find_all_by_subject_info_id(self.subject_info_id).count
-    tf = syllabus_words_count_include_string * 1.0 / syllabus_words_count * 100
+    tf = syllabus_words_count_include_string * 1.0 / syllabus_words_count
     
     if !$syllabus_all_count
       $syllabus_all_count = SyllabusWord.group('subject_info_id').to_a.count
