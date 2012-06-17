@@ -95,6 +95,8 @@ Room.create(name: "λ25")
 Room.create(name: "τ11")
 Room.create(name: "τ12")
 
+SyllabusWord.delete_all
+
 client = HTTPClient.new
 data = {"u_login" => account, "u_pass" => password}
 id = client.post_content("https://vu9.sfc.keio.ac.jp/sfc-sfs/login.cgi", data)
@@ -112,6 +114,7 @@ for i in 0..17 do
     unless Teacher.new.exist(teacher)
           Teacher.create(name: teacher)
     end
+
 #    puts "$1/term       : /#{$1}/#{term}/"
 #    puts "$2/day1       : /#{$2}/#{day1}/"
 #    puts "$3/timetable1 : /#{$3}/#{timetable1}/"
@@ -155,19 +158,18 @@ for i in 0..17 do
           while node do
             if /名詞/u =~ node.feature.force_encoding("utf-8")
               word_arr << node.surface
-           end
+            end
             node = node.next
           end
-          word_arr.uniq!
           word_arr.each do |word|
             subject_info = SubjectInfo.find_by_term_id_and_day_id_and_timetable_id_and_subject_id_and_teacher_id(term_id, day_id, timetable_id, subject_id, teacher_id)
-            unless SyllabusWord.new.exist(word, subject_info)
+            if subject_info
               SyllabusWord.create(string: word, subject_info_id: subject_info.id)
-            end
+	    end 
           end
         end
       end
     end
   end
-#  puts "#{100.0 / 18 * (i + 1)}% done"
+  puts "#{100.0 / 18 * (i + 1)}% done"
 end
